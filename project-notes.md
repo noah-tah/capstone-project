@@ -67,3 +67,4 @@ pip install <package-name> # this is the syntax for installing things into the v
 pip install -r requirements.txt # this will install all dependencies listed in requirements.txt
 deactivate # deactivate the virtual environment when done
 ```
+     - pip installed pandas now to use it

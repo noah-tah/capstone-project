@@ -54,3 +54,16 @@ Fancy Names would like the document sorted by one of the columns of information 
 - 6/11/2026
      - Created a virtual environment on my WSL-Ubuntu so that I can install pandas without affecting my global python configuration
      - Installed pandas
+- 07/02/2026
+     - Committing to finishing the project soon
+     - We have to find a way to import the spreadsheet data into the program
+     - We had to recreate the virtual environment
+```bash
+sudo apt install python3.14-venv # This was to install the virtual environment package
+python3 -m venv venv # create the virtual environment
+source venv/bin/activate # activate the virtual environment
+pip install <package-name> # this is the syntax for installing things into the virtual environment
+# or conversely
+pip install -r requirements.txt # this will install all dependencies listed in requirements.txt
+deactivate # deactivate the virtual environment when done
+```

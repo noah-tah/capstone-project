@@ -48,16 +48,12 @@ Fancy Names would like the document sorted by one of the columns of information 
 
 
 # Log of things done
-- 6/1/2026
-     - Started writing things down in Project Notes.
-     - Decided that I would use Python for simplicity.
-- 6/11/2026
-     - Created a virtual environment on my WSL-Ubuntu so that I can install pandas without affecting my global python configuration
-     - Installed pandas
-- 07/02/2026
-     - Committing to finishing the project soon
-     - We have to find a way to import the spreadsheet data into the program
-     - We had to recreate the virtual environment
+## 6/1/2026
+- Started writing things down in Project Notes.
+- Decided that I would use Python for simplicity.
+## 6/11/2026
+- Created a virtual environment on my WSL-Ubuntu so that I can install pandas without affecting my global python configuration
+- This was something that I am not really used to because I mostly did C flavored stuff and javascript, so was a bit confusing.
 ```bash
 sudo apt install python3.14-venv # This was to install the virtual environment package
 python3 -m venv venv # create the virtual environment
@@ -67,7 +63,21 @@ pip install <package-name> # this is the syntax for installing things into the v
 pip install -r requirements.txt # this will install all dependencies listed in requirements.txt
 deactivate # deactivate the virtual environment when done
 ```
-     - pip installed pandas now to use it
+- pip installed pandas now to use it
 07-16-2026
-     - Had to install the packages on my laptop so that I can work on the project on that machine
-     - Now lists all files in the data directory for the user to select
+- Had to install the packages on my laptop so that I can work on the project on that machine
+## 7/17/2026
+- Now lists all files in the data directory for the user to select
+```python
+DATA_DIR = Path(__file__).resolve().parent / "data"
+
+
+def list_data_files():
+    files = sorted([path for path in DATA_DIR.iterdir() if path.is_file()])
+    if not files:
+        raise FileNotFoundError(f"No files were found in {DATA_DIR}")
+    return files
+```
+- I decided to add the feature of listing the directories as an exercise because I wanted it to be a more interactive program and that just made sense to me.
+- https://docs.python.org/3/library/pathlib.html#pathlib.Path
+

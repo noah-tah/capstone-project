@@ -68,3 +68,6 @@ pip install -r requirements.txt # this will install all dependencies listed in r
 deactivate # deactivate the virtual environment when done
 ```
      - pip installed pandas now to use it
+07-16-2026
+     - Had to install the packages on my laptop so that I can work on the project on that machine
+     - Now lists all files in the data directory for the user to select

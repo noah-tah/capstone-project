@@ -1,14 +1,15 @@
 # Notes that I need to make
-- Thought processes
-- Solution itself
-- Issues that I run into
-- Timeframes I work or think about the problem
-- Resources or websites I look into to solve the problem
-- Insight into the process of working through the problem
 
-# When I submit the code file, also copy and paste into a text file to be uploaded alongside the code file.
+1. Thought processes
+2. Solution itself
+3. Issues that I run into
+4. Timeframes I work or think about the problem
+5. Resources or websites I look into to solve the problem
+6. Insight into the process of working through the problem
 
-"A company named, Fancy Names, specializes in using artists and technology to take a client's submitted name and then making artistic signage of that name, out of a range of materials. 
+## When I submit the code file, also copy and paste into a text file to be uploaded alongside the code file
+
+"A company named, Fancy Names, specializes in using artists and technology to take a client's submitted name and then making artistic signage of that name, out of a range of materials.
 They have a singular store where a customer can make a purchase to pick up later or an order can be placed online.
 Online orders have to be paid for in advance but in store orders can be paid for at pick up.
 The production of the product happens at a different location called Art Factory and then is either shipped to the client or over to the store.
@@ -32,28 +33,35 @@ The second column contains the material the name will be created with and the th
 While this information does not need to be manipulated it is important to have in the new document so Art Factory can sue it for production and shipping, instead of having to look at 2 seperate documents
 Fancy Names would like the document sorted by one of the columns of information so that there is some order to the document when it is looked at.
 
+## Most useful resources for using Python
 
-# Most useful resources for using Python
 - pandas
-     - reads excel files
-     - manipulates columns, sorting
-     - writes back to Excel file
 
+     1. reads excel files
 
-# Documentation that I referenced:
+     2. manipulates columns, sorting
+     3. writes back to Excel file
+
+## Documentation that I referenced
+
      - https://pandas.pydata.org/docs/user_guide/io.html#excel-files
      - https://pandas.pydata.org/docs/user_guide/text.html 
+     - https://docs.python.org/3/library/pathlib.html#pathlib.Path
 
+## Log of things done
 
-
-
-# Log of things done
 ## 6/1/2026
+
 - Started writing things down in Project Notes.
+
 - Decided that I would use Python for simplicity.
+
 ## 6/11/2026
+
 - Created a virtual environment on my WSL-Ubuntu so that I can install pandas without affecting my global python configuration
+
 - This was something that I am not really used to because I mostly did C flavored stuff and javascript, so was a bit confusing.
+
 ```bash
 sudo apt install python3.14-venv # This was to install the virtual environment package
 python3 -m venv venv # create the virtual environment
@@ -63,11 +71,17 @@ pip install <package-name> # this is the syntax for installing things into the v
 pip install -r requirements.txt # this will install all dependencies listed in requirements.txt
 deactivate # deactivate the virtual environment when done
 ```
+
 - pip installed pandas now to use it
+
 07-16-2026
+
 - Had to install the packages on my laptop so that I can work on the project on that machine
+
 ## 7/17/2026
+
 - Now lists all files in the data directory for the user to select
+
 ```python
 DATA_DIR = Path(__file__).resolve().parent / "data"
 
@@ -78,6 +92,40 @@ def list_data_files():
         raise FileNotFoundError(f"No files were found in {DATA_DIR}")
     return files
 ```
-- I decided to add the feature of listing the directories as an exercise because I wanted it to be a more interactive program and that just made sense to me.
-- https://docs.python.org/3/library/pathlib.html#pathlib.Path
 
+- I decided to add the feature of listing the directories as an exercise because I wanted it to be a more interactive program and that just made sense to me
+
+## Code breakdown of listing all files in specified directory
+
+```python
+DATA_DIR = Path(__file__).resolve().parent / "data"
+files = sorted([path for path in DATA_DIR.iterdir() if path.is_file()])
+```
+
+- `Path(__file**__).resolve().parent / "data"**`
+
+- `Path(__file__)`
+        - `__file__` is a special built in variable that python uses to set the path of the current directory, pointing to the script being executed
+        - `Path()`
+            - Path comes from `pathlib`. We wrap the current working directory in a path object that makes it convenient to work with paths across platforms
+
+- `.resolve()`
+        - resolve converts the path into an absolute path if it wasn’t already, guaranteeing more consistent results
+
+- `.parent`
+        - takes the path that is pointing at the script, and goes up a level to the directory containing the script
+
+- `sorted()`
+          - Takes an iterable , and returns a list with the items in a sorted order- for Path objects it sorts the alphabetically by their string representation
+
+- `DATA_DIR.iterdir()`
+          - Returns an iterator over all the entries in the directory, but does not delve into subfolders.
+          - Apparently, an iterator is an object that sort of lazy loads the items from the directory. It knows how to fetch the items, but does not store them in memory at the time of inception.
+
+- `path.is_file()`
+          - returns `True` if it points to a regular file, and `False` if it is a directory, a symlink, or does not exist
+
+## 7/18/2026
+
+- In the first column we need to clean the names that are contained in it
+- Some of the names are smushed together so we have iterate over each character in the names, and we should detect for a capital letter that is contained in the middle of a string before a space. That should let us know that the last name has began before a space has been placed, and a space should be inserted before the capital letter for correction.

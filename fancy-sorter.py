@@ -47,6 +47,9 @@ def load_first_sheet_from_selected_file():
     return df
 
 
+PREFIXES = ["Mc", "Mac", "Van", "De", "Del", "La", "Le", "St", "O'"]
+
+
 def fix_names_column(name):
     if pd.isna(name):
         return name
@@ -54,6 +57,10 @@ def fix_names_column(name):
         return name
 
     cleaned_name = re.sub(r"(?<=[a-z])([A-Z])", r" \1", name)
+
+    for prefix in PREFIXES:
+        cleaned_name = re.sub(rf"({re.escape(prefix)})\s+([A-Z])", r"\1\2", cleaned_name)
+
     return cleaned_name.strip()
 
 
@@ -65,10 +72,27 @@ def clean_names_column(df):
     df[first_column] = df[first_column].apply(fix_names_column)
     return df
 
+def print_all_rows(df):
+    if df.empty:
+        print("The DataFrame is empty.")
+        return
+    
+    print(df.to_string(index=False))
+
+
+def print_first_column(df):
+    if df.empty:
+        print("The DataFrame is empty.")
+        return
+
+    first_column = df.columns[0]
+    print(df[first_column].to_string(index=False))
 
 if __name__ == "__main__":
     orders = load_first_sheet_from_selected_file()
+
     orders = clean_names_column(orders)
 
-    print(orders.head())
-    print(orders.columns)
+    print_first_column(orders)
+
+

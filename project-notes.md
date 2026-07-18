@@ -129,3 +129,35 @@ files = sorted([path for path in DATA_DIR.iterdir() if path.is_file()])
 
 - In the first column we need to clean the names that are contained in it
 - Some of the names are smushed together so we have iterate over each character in the names, and we should detect for a capital letter that is contained in the middle of a string before a space. That should let us know that the last name has began before a space has been placed, and a space should be inserted before the capital letter for correction.
+
+```python
+  cleaned_name = re.sub(r"(?<=[a-z])([A-Z])", r" \1", name)
+```
+
+- This is the important regex that took care of a lot of the heavy lfiting in the first column
+
+- This searches for an uppercase letter that comes after a lowercase letter, then it puts a space behind it.
+
+- The problem is that there are edge cases like in some names like McMahan which will separate unintentionally.
+
+- The solution I found is that you have a list of common prefixes and then when regex finds these it will exit out of the replacement.
+
+```python
+
+cleaned_name = re.sub(r"(?<=[a-z])([A-Z])", r" \1", name)
+
+for prefix in PREFIXES:
+     cleaned_name = re.sub(rf"({re.escape(prefix)})\s+([A-Z])", r"\1\2", cleaned_name)
+```
+
+- `re.sub()`
+          - find parts of the string that match a pattern and replace them with something else
+          - This is inserting a space before capital letters.
+- `(?<=[a-z])`
+          - checks the character before the current posistion
+          - character before this must be a lowercase letter
+- `([A-Z])`
+          - Matches an uppercase letter
+          - Captures it for reuse
+
+

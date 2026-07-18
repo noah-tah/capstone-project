@@ -14,3 +14,10 @@ def test_fix_names_column_inserts_space_before_middle_capital():
     assert module.fix_names_column("Evan PatrickVaverka") == "Evan Patrick Vaverka"
     assert module.fix_names_column("EvanVaverka Smith") == "Evan Vaverka Smith"
     assert module.fix_names_column("AliciaKeys") == "Alicia Keys"
+
+
+def test_fix_names_column_preserves_common_name_prefixes():
+    assert module.fix_names_column("McMahan") == "McMahan"
+    assert module.fix_names_column("MacDonald") == "MacDonald"
+    assert module.fix_names_column("VanHouten") == "VanHouten"
+    assert module.fix_names_column("DeSoto") == "DeSoto"

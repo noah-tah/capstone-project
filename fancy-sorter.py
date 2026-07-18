@@ -21,7 +21,7 @@ def list_files_in_data_directory():
 # the function actually only loads the first sheet in the spreadsheet
 # The name currently implies that it loads all the sheets
 
-def load_first_sheet():
+def load_first_sheet_from_selected_file():
     files_listed = list_files_in_data_directory()
 
     print("Available files in the data folder:")
@@ -67,7 +67,7 @@ def clean_names_column(df):
 
 
 if __name__ == "__main__":
-    orders = load_first_sheet()
+    orders = load_first_sheet_from_selected_file()
     orders = clean_names_column(orders)
 
     print(orders.head())

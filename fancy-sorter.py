@@ -88,11 +88,55 @@ def print_first_column(df):
     first_column = df.columns[0]
     print(df[first_column].to_string(index=False))
 
+
+def split_name(name):
+    if pd.isna(name) or not isinstance(name, str):
+        return []
+
+    return [part for part in name.strip().split() if part]
+
+
+def split_names_column(df):
+    if df.empty or df.shape[1] == 0:
+        return df
+
+    result_df = df.copy()
+    first_column = result_df.columns[0]
+    cleaned_names = result_df[first_column].apply(fix_names_column)
+    split_names = cleaned_names.apply(split_name)
+
+    first_names = []
+    middle_names = []
+    last_names = []
+
+    for parts in split_names:
+        if not parts:
+            first_names.append("N/A")
+            middle_names.append("N/A")
+            last_names.append("N/A")
+        elif len(parts) == 1:
+            first_names.append(parts[0])
+            middle_names.append("N/A")
+            last_names.append("N/A")
+        elif len(parts) == 2:
+            first_names.append(parts[0])
+            middle_names.append("N/A")
+            last_names.append(parts[1])
+        else:
+            first_names.append(parts[0])
+            middle_names.append(" ".join(parts[1:-1]))
+            last_names.append(parts[-1])
+
+    result_df["FIRST"] = first_names
+    result_df["MIDDLE"] = middle_names
+    result_df["LAST"] = last_names
+    return result_df
+
 if __name__ == "__main__":
     orders = load_first_sheet_from_selected_file()
 
-    orders = clean_names_column(orders)
+    orders = split_names_column(orders)
 
-    print_first_column(orders)
+    print(orders.to_string(index=False))
 
 

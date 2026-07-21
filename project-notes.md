@@ -160,4 +160,14 @@ for prefix in PREFIXES:
           - Matches an uppercase letter
           - Captures it for reuse
 
+## 7/20/2026
 
+- Today realized i misunderstood the specificiations of the assignment, and instead of separating the columns of information I was cleaning the data. That is fine though because I can keep that code as a preprocessing step for a better solution.
+
+## 7/21/2026
+
+- Split names into 3 parts, FIRST, MIDDLE, LAST
+
+- If the name does not have one of the parts, N/A will be added in that column.
+
+- Since every name has a first name and a last name, if there are only 2 names in the original column, we will assume it is a first and a last name, and if there are three we will assume the second item is the middle name.

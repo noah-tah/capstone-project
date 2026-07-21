@@ -21,3 +21,13 @@ def test_fix_names_column_preserves_common_name_prefixes():
     assert module.fix_names_column("MacDonald") == "MacDonald"
     assert module.fix_names_column("VanHouten") == "VanHouten"
     assert module.fix_names_column("DeSoto") == "DeSoto"
+
+
+def test_split_names_column_splits_names_into_first_middle_last():
+    df = module.pd.DataFrame({"Name": ["Evan Vaverka", "Evan Patrick Vaverka", "Evan", "E. Vaverka"]})
+
+    result = module.split_names_column(df)
+
+    assert result["FIRST"].tolist() == ["Evan", "Evan", "Evan", "E."]
+    assert result["MIDDLE"].tolist() == ["N/A", "Patrick", "N/A", "N/A"]
+    assert result["LAST"].tolist() == ["Vaverka", "Vaverka", "N/A", "Vaverka"]

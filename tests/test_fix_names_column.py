@@ -28,6 +28,8 @@ def test_split_names_column_splits_names_into_first_middle_last():
 
     result = module.split_names_column(df)
 
-    assert result["FIRST"].tolist() == ["Evan", "Evan", "Evan", "E."]
-    assert result["MIDDLE"].tolist() == ["N/A", "Patrick", "N/A", "N/A"]
-    assert result["LAST"].tolist() == ["Vaverka", "Vaverka", "N/A", "Vaverka"]
+    assert list(result.columns) == ["First", "Middle", "Last"]
+    assert "Name" not in result.columns
+    assert result["First"].tolist() == ["Evan", "Evan", "Evan", "E."]
+    assert result["Middle"].tolist() == ["N/A", "Patrick", "N/A", "N/A"]
+    assert result["Last"].tolist() == ["Vaverka", "Vaverka", "N/A", "Vaverka"]

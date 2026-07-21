@@ -42,11 +42,14 @@ Fancy Names would like the document sorted by one of the columns of information 
      2. manipulates columns, sorting
      3. writes back to Excel file
 
-## Documentation that I referenced
+## Documentation and resources
 
      - https://pandas.pydata.org/docs/user_guide/io.html#excel-files
      - https://pandas.pydata.org/docs/user_guide/text.html 
      - https://docs.python.org/3/library/pathlib.html#pathlib.Path
+     - https://pandas.pydata.org/docs/reference/api/pandas.Series.apply.html
+     - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html
+
 
 ## Log of things done
 

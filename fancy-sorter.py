@@ -1,14 +1,10 @@
-# The first column contains the names to be created by the artists
-# A space between parts of the name is where it would be broken apart.
-# The second column contains the material the name will be created with,
-# and the third column contains whether it is returned to store "Store"
-# or shipped from the art factory.
-
 from pathlib import Path
 import re
 import pandas as pd
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
+OUTPUT_DIR = Path(__file__).resolve().parent / "output"
+OUTPUT_FILE = OUTPUT_DIR / "Sorted Name List.xlsx"
 
 
 def list_files_in_data_directory():
@@ -17,9 +13,6 @@ def list_files_in_data_directory():
         raise FileNotFoundError(f"No files were found in {DATA_DIR}")
     return files
 
-# Here i might consider a different naming convention because
-# the function actually only loads the first sheet in the spreadsheet
-# The name currently implies that it loads all the sheets
 
 def load_first_sheet_from_selected_file():
     files_listed = list_files_in_data_directory()
@@ -127,16 +120,24 @@ def split_names_column(df):
             middle_names.append(" ".join(parts[1:-1]))
             last_names.append(parts[-1])
 
-    result_df["FIRST"] = first_names
-    result_df["MIDDLE"] = middle_names
-    result_df["LAST"] = last_names
-    return result_df
+    name_columns = pd.DataFrame({
+        "First": first_names,
+        "Middle": middle_names,
+        "Last": last_names,
+    })
+
+    remaining_columns = result_df.drop(columns=[first_column])
+    return pd.concat([name_columns, remaining_columns], axis=1)
 
 if __name__ == "__main__":
     orders = load_first_sheet_from_selected_file()
 
     orders = split_names_column(orders)
+    orders = orders.sort_values(by="First", ascending=True, kind="mergesort")
 
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    orders.to_excel(OUTPUT_FILE, index=False)
+    print(f"Saved output to {OUTPUT_FILE}")
     print(orders.to_string(index=False))
 
 

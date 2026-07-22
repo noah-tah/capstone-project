@@ -138,6 +138,4 @@ if __name__ == "__main__":
     OUTPUT_DIR.mkdir(exist_ok=True)
     orders.to_excel(OUTPUT_FILE, index=False)
     print(f"Saved output to {OUTPUT_FILE}")
-    print(orders.to_string(index=False))
-
 

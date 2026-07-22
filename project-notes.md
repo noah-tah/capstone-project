@@ -174,3 +174,63 @@ for prefix in PREFIXES:
 - If the name does not have one of the parts, N/A will be added in that column.
 
 - Since every name has a first name and a last name, if there are only 2 names in the original column, we will assume it is a first and a last name, and if there are three we will assume the second item is the middle name.
+
+## 7/22/2026
+
+- This function does a ton of the heavy lifting
+
+```python
+def split_names_column(df):
+    if df.empty or df.shape[1] == 0:
+        return df
+
+    result_df = df.copy()
+    first_column = result_df.columns[0]
+    cleaned_names = result_df[first_column].apply(fix_names_column)
+    split_names = cleaned_names.apply(split_name)
+
+    first_names = []
+    middle_names = []
+    last_names = []
+
+    for parts in split_names:
+        if not parts:
+            first_names.append("N/A")
+            middle_names.append("N/A")
+            last_names.append("N/A")
+        elif len(parts) == 1:
+            first_names.append(parts[0])
+            middle_names.append("N/A")
+            last_names.append("N/A")
+        elif len(parts) == 2:
+            first_names.append(parts[0])
+            middle_names.append("N/A")
+            last_names.append(parts[1])
+        else:
+            first_names.append(parts[0])
+            middle_names.append(" ".join(parts[1:-1]))
+            last_names.append(parts[-1])
+
+    name_columns = pd.DataFrame({
+        "First": first_names,
+        "Middle": middle_names,
+        "Last": last_names,
+    })
+
+    remaining_columns = result_df.drop(columns=[first_column])
+    return pd.concat([name_columns, remaining_columns], axis=1)
+```
+
+- `first_column = result_df.columns[0]`
+
+          - We grab the first column of the DataFrame which at this point in the program, they have been cleaned with our previous regex magic
+
+- `split_names = cleaned_names.apply(split_name)`
+
+          - Here we are applying a function we created to split the names at the spaces and return them
+
+- `for parts in split_names:`
+
+          - This part has some interesting logic built into the if statements, it assumes that if the name only has two parts, it is a first and last name, and only if it has 3 parts will it add the middle name.
+
+- For this assignment I am happy with the program, if I was to expand it in the future I would handle more sorting capabilities or maybe different output formats. This would also be interesting to hook up to a web page and handle the interface with that instead of the command line.

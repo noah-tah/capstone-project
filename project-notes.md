@@ -1,4 +1,14 @@
-# Notes that I need to make
+# Noah Tah
+
+## 7/22/2026
+
+## Programming Capstone
+
+## Evan Vaverka
+
+## Northwestern Oklahoma State Univserity
+
+## Notes that I need to make
 
 1. Thought processes
 2. Solution itself
@@ -49,7 +59,6 @@ Fancy Names would like the document sorted by one of the columns of information 
      - https://docs.python.org/3/library/pathlib.html#pathlib.Path
      - https://pandas.pydata.org/docs/reference/api/pandas.Series.apply.html
      - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html
-
 
 ## Log of things done
 
@@ -175,7 +184,7 @@ for prefix in PREFIXES:
 
 - Since every name has a first name and a last name, if there are only 2 names in the original column, we will assume it is a first and a last name, and if there are three we will assume the second item is the middle name.
 
-## 7/22/2026
+## 7/22/2026 - Final
 
 - This function does a ton of the heavy lifting
 
